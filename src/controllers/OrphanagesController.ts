@@ -7,10 +7,13 @@ import * as Yup from 'yup'
 export default {
     async index(request:Request,response:Response){
         const orphanagesRepository = getRepository(Orphanage);
-
+        
         const orphanages = await orphanagesRepository.find({
+            where:{
+                valid_orphanage:true
+            },
             relations:['images']
-        });
+        })
 
         return response.json(orphanageView.renderMany(orphanages));
 
